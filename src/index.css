@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Emil Kowalski Animation Philosophy Curves */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #1c1d20;
+    color: #ffffff;
+    font-family: 'Manrope', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+/* Emil Kowalski Button Press Recipe */
+.btn-animate-press {
+  transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out), background-color 160ms ease;
+  will-change: transform;
+}
+
+.btn-animate-press:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-animate-press:hover {
+    box-shadow: 0 0 24px rgba(232, 191, 150, 0.35), 0 6px 16px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1.5px);
+  }
+  .btn-animate-press:active {
+    transform: scale(0.97) translateY(0);
+  }
+}
+
+/* Keep the oval backdrop still while the portrait moves independently. */
+.hero-portrait-stage {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 5 / 6;
+  isolation: isolate;
+}
+
+.hero-portrait-backdrop {
+  position: absolute;
+  inset: 25% 0 8%;
+  border-radius: 50%;
+  background: #936d55;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+.hero-portrait-cutout {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 0 0 46% 46%;
+}
+
+.hero-portrait {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 94%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform-origin: 50% 100%;
+  transition: transform 700ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-portrait-stage:hover .hero-portrait {
+    transform: translateY(-6px) scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait-stage:hover .hero-portrait {
+    transform: none;
+  }
+}
+
+/* Tab Pill Microanimation */
+.tab-pill {
+  transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out), color 160ms var(--ease-out), border-color 160ms var(--ease-out);
+  will-change: transform;
+}
+
+.tab-pill:active {
+  transform: scale(0.96);
+}
+
+/* Reduced Motion: Drop transform movement, keep only subtle opacity */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-marquee {
+    animation: none !important;
+  }
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Focus Visible Accessible Styling */
+:focus-visible {
+  outline: 2px solid #e8bf96;
+  outline-offset: 3px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #1c1d20;
+}
+::-webkit-scrollbar-thumb {
+  background: #3a3835;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e8bf96;
+}
